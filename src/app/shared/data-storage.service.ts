@@ -5,23 +5,23 @@ import {Recipe} from "../recipes/recipe.model";
 import 'rxjs/Rx';
 
 @Injectable()
-export class DataStorageService{
+export class DataStorageService {
 
-  constructor(private http: Http, private recipeService: RecipeService){
+  constructor(private http: Http, private recipeService: RecipeService) {
 
   }
 
-  storeRecipes(){
+  storeRecipes() {
     return this.http.put('https://ng-project-demo.firebaseio.com/recipes.json', this.recipeService.getRecipes());
   }
 
-  getRecipes(){
+  getRecipes() {
     this.http.get('https://ng-project-demo.firebaseio.com/recipes.json')
       .map(
         (response: Response) => {
           const recipes: Recipe[] = response.json();
-          for(let recipe of recipes){
-            if(!recipe['ingredients']){
+          for (let recipe of recipes) {
+            if (!recipe['ingredients']) {
               console.log(recipe);
               recipe['ingredients'] = [];
             }
@@ -35,4 +35,4 @@ export class DataStorageService{
         }
       );
   }
-
+}
